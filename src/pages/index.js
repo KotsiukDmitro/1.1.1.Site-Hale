@@ -1,176 +1,225 @@
 import * as React from "react"
+import Layout from '../components/layout'
+import Seo from '../components/seo'
+import SectionFirst from '../components/Section-First'
+import SectionBenefits from '../components/Section-Benefits'
+import SectionSlide from '../components/Section-Slide'
+import SectionDescription from '../components/Section-Description'
+import SectionSlideText from '../components/Section-SlideText'
+import SectionFeyFeatures from "../components/Section-KeyFeatures"
+import SectionPriority from "../components/Section-Priority"
+import SectionCard1 from "../components/Section-Card1"
+import SectionCard2 from "../components/Section-Card2"
+import SectionCard3 from "../components/Section-Card3"
+import FaqAccordion from "../components/FaqAccordion"
+import SpecialOfferModal from "../components/SpecialOfferModal"
+import PopUpFooter from "../components/PopUpFooter"
 
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-const headingAccentStyles = {
-  color: "#663399",
-}
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0,
-}
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30,
-}
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Col, Container, Row, Button, Collapse, Modal } from "react-bootstrap"
+import { StaticImage } from "gatsby-plugin-image"
+import 'swiper/scss'
+import 'swiper/scss/navigation'
+import 'swiper/scss/pagination'
+import "../styles/main.scss"
 
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
-}
 
-const docLinkStyle = {
-  ...linkStyle,
-  listStyleType: "none",
-  marginBottom: 24,
-}
-
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25,
-}
-
-const docLink = {
-  text: "Documentation",
-  url: "https://www.gatsbyjs.com/docs/",
-  color: "#8954A8",
-}
-
-const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
-  fontSize: 11,
-  fontWeight: "bold",
-  letterSpacing: 1,
-  borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative",
-  top: -2,
-  marginLeft: 10,
-  lineHeight: 1,
-}
-
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/getting-started/",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
-  },
-  {
-    text: "How to Guides",
-    url: "https://www.gatsbyjs.com/docs/how-to/",
-    description:
-      "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-    color: "#1099A8",
-  },
-  {
-    text: "Reference Guides",
-    url: "https://www.gatsbyjs.com/docs/reference/",
-    description:
-      "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-    color: "#BC027F",
-  },
-  {
-    text: "Conceptual Guides",
-    url: "https://www.gatsbyjs.com/docs/conceptual/",
-    description:
-      "Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.",
-    color: "#0D96F2",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    badge: true,
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
-  },
-]
+import { useState } from 'react';
 
 const IndexPage = () => {
+
+  const [open, setOpen] = useState(false)
+
+  const [check, setCheck] = useState(2)
+
+  const [show, setShow] = useState(false)
+
+  const [showSpecialOfferModal, setShowSpecialOfferModal] = useState(false)
+
+  function selectCard(cardNumber) {
+    setShowSpecialOfferModal(true)
+    setCheck(cardNumber)
+  }
+
+
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>
-        Congratulations
-        <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
-      </h1>
-      <p style={paragraphStyles}>
-        Edit <code style={codeStyles}>src/pages/index.js</code> to see this page
-        update in real-time. 😎
-      </p>
-      <ul style={listStyles}>
-        <li style={docLinkStyle}>
-          <a
-            style={linkStyle}
-            href={`${docLink.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-          >
-            {docLink.text}
-          </a>
-        </li>
-        {links.map(link => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
-              <a
-                style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-              >
-                {link.text}
-              </a>
-              {link.badge && (
-                <span style={badgeStyle} aria-label="New Badge">
-                  NEW!
-                </span>
-              )}
-              <p style={descriptionStyle}>{link.description}</p>
-            </span>
-          </li>
-        ))}
-      </ul>
-      <img
-        alt="Gatsby G Logo"
-        src="data:image/svg+xml,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a10 10 0 110 20 10 10 0 010-20zm0 2c-3.73 0-6.86 2.55-7.75 6L14 19.75c3.45-.89 6-4.02 6-7.75h-5.25v1.5h3.45a6.37 6.37 0 01-3.89 4.44L6.06 9.69C7 7.31 9.3 5.63 12 5.63c2.13 0 4 1.04 5.18 2.65l1.23-1.06A7.959 7.959 0 0012 4zm-8 8a8 8 0 008 8c.04 0 .09 0-8-8z' fill='%23639'/%3E%3C/svg%3E"
-      />
-    </main>
+    <Layout pageTitle="Home Page">
+      <Container fluid="xl" className="container-padding bg-white">
+
+        {/* Breathe Better Through Your Nose Instantly */}
+        <SectionFirst />
+
+        <SectionBenefits />
+
+        {/* Enjoy Full, Effortless Breaths Through Your Nose */}
+        <SectionSlide />
+
+        <section className="section-how-it-works">
+          <Row>
+            <Col md={4} xs={12} className="block-title">
+              <h2 className="block_heading fw-bold text-uppercase position-relative">gently opens & supports</h2>
+              <h2 className="block_title fw-bold">How It Works</h2>
+            </Col>
+            <Col md={8} xs={12} className="how-it-works_line">
+              <p className="block-text">Hale is <strong>like a contact lens for your nose</strong>-it instantly opens up your nasal passages and is virtually undetectable to those around you. Unlike toxic medicines or sprays, Hale corrects the structure of your nose without the need for invasive surgery.</p>
+              <p className="block-text">Hale was developed at Johns Hopkins Medical Center and was rigorously tested to provide maximum effectiveness, comfort, and discretion.</p>
+              <p className="block-text"><strong>Start Breathing Better Today.</strong></p>
+            </Col>
+          </Row>
+        </section>
+
+        <section className="section-breathe-better">
+          <Row >
+            <Col xs={12} md={6} className="column-r">
+              <iframe className="section_video" src="https://videos.sproutvideo.com/embed/a79eddb71f18e3c12e/1c8cdd6084fc9198?playerColor=28bbff&amp;bigPlayButton=false&amp;showControls=false&amp;volume=0&amp;volumeControl=false&amp;background=true&amp;transparent=true&amp;autoPlay=true&amp;loop=true&amp;scale=fill" width="608" height="456" frameBorder="0" allowFullScreen="" ></iframe>
+            </Col>
+            <Col xs={12} md={6} className="section_content">
+              <h2 className="block_heading text-uppercase position-relative">open airways instantly</h2>
+              <h2 className="block_title fw-bold">Breathe Better Than Ever!</h2>
+              <p className="block-text mb-3 text-dark">Battling a nasal obstruction can make you feel like you’re breathing through a kinked straw. Imagine being able to unkink that straw – allowing you to take full, effortless breaths again. That’s exactly what Hale does for you!</p>
+              <p className="block-text mb-3 text-dark">Better nose breathing can improve your life in more ways than you might think. Hale can help you stop snoring, improve sleep quality, improve your athletic performance and even enhance your mood.</p>
+              <p className="block-text mb-0 text-dark"><strong>Life is good once you can finally breathe!</strong></p>
+            </Col>
+          </Row>
+        </section>
+
+        <section className="section-with-doctor">
+          <Row>
+            <Col xs={12} md={{ span: 6, order: 'last' }} className="column-l">
+              <iframe className="section_video" src="https://videos.sproutvideo.com/embed/d39eddb71f1ee4c45a/8ef706cd0b5eb3b1?playerColor=28bbff&amp;showControls=false&amp;volume=1&amp;scale=fill" width="600" height="802" frameBorder="0" allowFullScreen=""></iframe>
+            </Col>
+            <Col xs={12} md={6} className="section_content">
+              <h2 className="block_heading text-uppercase position-relative">proven safe & effective</h2>
+              <h2 className="block_title fw-bold">Doctor Recommended & Backed By Science</h2>
+              <p className="block-text mb-3 text-dark">Hale was inspired by Dr. Byrne’s experience in both the clinic and operating room while treating nasal obstruction over the past 20 years.</p>
+              <p className="block-text mb-3 text-dark">Preliminary results from independent clinical trials have proven Hale to be 100% safe <strong>and more effective than nasal strips.</strong>In fact, Hale was even shown to be 95% as effective as full reconstructive surgery!</p>
+              <p className="block-text mb-3 text-dark"><strong>Hale relieves symptoms caused by :</strong></p>
+              <ul className="list">
+                <li className="list-element">Nasal Valve Collapse</li>
+                <li className="list-element">Deviated Septum</li>
+                <li className="list-element">Airway Obstruction</li>
+                <li className="list-element">Nasal Inflammation</li>
+                <li className="list-element">And more</li>
+              </ul>
+              <a className="button-link text-dark text-center fw-bold text-uppercase text-decoration-none d-inline-block rounded-2 border-none" href="#cards">Order Hale Breathing Now</a>
+            </Col>
+          </Row>
+        </section>
+
+        {/* Discreet & Comfortable To Wear Around The Clock */}
+        <SectionDescription />
+
+        {/* Here's Why People Love Hale */}
+        <SectionSlideText />
+
+
+        <section className="section-steps text-center">
+          <h2 className="block_title fw-bold">Better Breathing Is Seconds Away</h2>
+          <h2 className="section-slide-text fw-normal">Hale Is Easy To Use</h2>
+          <Row className="mx-0 ">
+            <Col xs={12} md={4} className="px-0 position-relative"><StaticImage src='../images/steps/step-1.jpg' alt='photo' className="img-bright"></StaticImage>
+              <div className="text-group text-center">
+                <h2 className="block_heading text-uppercase position-relative text-white">step 1</h2>
+                <p className="text-white position-relative fw-bold">Choose Your Size</p>
+              </div>
+            </Col>
+            <Col xs={12} md={4} className="px-0 position-relative"><StaticImage src='../images/steps/step-2.jpg' alt='photo' className="img-bright"></StaticImage>
+              <div className="text-group text-center ">
+                <h2 className="block_heading text-uppercase position-relative text-white">step 2</h2>
+                <p className="text-white position-relative fw-bold">Insert Hale</p>
+              </div>
+            </Col>
+            <Col xs={12} md={4} className="px-0 position-relative"><StaticImage src='../images/steps/step-3.jpg' alt='photo' className="img-bright"></StaticImage>
+              <div className="text-group text-center">
+                <h2 className="block_heading text-uppercase position-relative text-white">step 3</h2>
+                <p className="text-white position-relative fw-bold">Breathe Easy!</p>
+              </div>
+            </Col>
+          </Row>
+        </section>
+
+        {/* Designed For Crystal Clear Breathing */}
+        <SectionFeyFeatures />
+
+        <section className="section-inventor">
+          <Row>
+            <Col xs={12} md={6} className="d-flex justify-content-center align-items-center">
+              <StaticImage src='../images/Patrick-Byrne.png' alt="photo Patrick Byrne"></StaticImage>
+            </Col>
+            <Col xs={12} md={6}>
+              <h2 className="block_title fw-bolder section-inventor-title">Inventor Patrick Byrne, MD, FACS, MBA</h2>
+              <p className="block-text">After two decades of diagnosing and treating nasal obstruction patients, Dr. Patrick Byrne was inspired to create a better solution for his patients.</p>
+              <p className="block-text">As the Chair of Cleveland Clinic’s Head and Neck Institute and the Director of the Facial Plastic and Reconstructive Surgery Division at Johns Hopkins, Dr. Byrne had access to virtually any resource he needed. This allowed him to develop a “dream product” that both solved the primary problem while fulfilling all the wishes his patients had mentioned throughout his career.</p>
+              <p className="block-text">After years of development and proven success in independent clinical trials, Hale – the most effective, comfortable, discreet, and affordable way to improve your nasal breathing – was born.</p>
+            </Col>
+          </Row>
+        </section>
+
+        {/* Your Satisfaction Is Our Priority */}
+        <SectionPriority />
+
+        <section className="main-offer" id="cards">
+          <StaticImage className='main-logo text-center main-logo-offer' src="../images/main-logo.svg" alt="logo"  ></StaticImage>
+          <h2 className="offer-title text-center fw-bold">Experience the Power of Clear Breathing with Hale!</h2>
+          <p className="offer-heading text-center">Order now and save</p>
+          <div className="offer-bundles">
+            <SpecialOfferModal show={showSpecialOfferModal} onHide={() => setShowSpecialOfferModal(false)} />
+            <Row>
+              <Col xs={12} md={4} className="card-indent" onClick={() => selectCard(1)}>
+                <SectionCard1 checked={check === 1} />
+              </Col>
+              <Col xs={12} md={4} className="card-indent" onClick={() => selectCard(2)}>
+                <SectionCard2 checked={check === 2} />
+              </Col>
+              <Col xs={12} md={4} className="card-indent" onClick={() => selectCard(3)}>
+                <SectionCard3 checked={check === 3} />
+              </Col>
+            </Row>
+            <div className="btn-link-after-cards">
+              <a className="button-link text-dark text-center fw-bold text-uppercase text-decoration-none d-inline-block rounded-2 border-none w-100" onClick={() => setShowSpecialOfferModal(true)}>Order Now</a>
+            </div>
+          </div>
+        </section>
+        <section className="footer-badges">
+          <div className="icons-group d-flex justify-content-center align-items-center">
+            <div className="img-footer "><StaticImage src='../images/footer/guarantee-badges-sprite.webp' alt="logo" className="img-30-day"></StaticImage></div>
+            <div className="img-footer"><StaticImage src='../images/footer/payment-badge-american-express.svg' alt="logo" className="img-footer-size1"></StaticImage></div>
+            <div className="img-footer"><StaticImage src='../images/footer/payment-badge-discover.svg' alt="logo" className="img-footer-size1"></StaticImage></div>
+            <div className="img-footer"><StaticImage src='../images/footer/payment-badge-mastercard.svg' alt="logo" className="img-footer-size1"></StaticImage></div>
+            <div className="img-footer"><StaticImage src='../images/footer/payment-badge-visa.svg' alt="logo" className="img-footer-size1"></StaticImage></div>
+            <div className="img-footer"><StaticImage src='../images/footer/payment-badge-paypal.svg' alt="logo" className="img-footer-size2"></StaticImage></div>
+            <div className="img-footer"><StaticImage src='../images/footer/payment-badge-stripe-secure.svg' alt="logo" className="img-footer-size3"></StaticImage></div>
+          </div>
+          <div className="mobile-only text-center"><h4 className="text-center fw-bold">30 Day Money Back Guarantee!</h4></div>
+        </section>
+
+        <section className="section-faq text-center">
+          <div className="display-faq" >
+            <h3 ><strong>Have a Question</strong><span className="title-faq text-white fw-bold text-decoration-underline" onClick={() => setOpen(!open)}>See Our FAQs</span></h3>
+          </div>
+          <Collapse in={open}>
+            <div>
+              <FaqAccordion />
+            </div>
+          </Collapse>
+
+          <div className="mobile-faqs"><Button variant="light" className="button-mobile-faq bg-white" onClick={() => setShow(true)} >Click HERE to View FAQs >></Button>
+          </div>
+          <Modal show={show} onHide={() => setShow(false)} className="mobile-modal">
+            <Modal.Header closeButton className="mobile-faqs-header"></Modal.Header>
+            <Modal.Title className="mobile-faqs-title text-center fw-bold">Frequently Asked Questions</Modal.Title>
+            <Modal.Body>
+              <FaqAccordion />
+            </Modal.Body>
+          </Modal>
+        </section>
+      </Container>
+      <PopUpFooter />
+
+    </Layout >
   )
 }
 
 export default IndexPage
 
-export const Head = () => <title>Home Page</title>
+export const Head = () => <Seo title='Home Page' />
