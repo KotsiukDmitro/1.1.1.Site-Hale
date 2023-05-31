@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../styles/main.scss"
 import { Container } from 'react-bootstrap';
 
-const Layout = ({ pageTitle, children }) => {
+const Layout = ({ pageTitle, children, cart }) => {
     const data = useStaticQuery(graphql`
     query {
       site {
@@ -25,7 +25,7 @@ const Layout = ({ pageTitle, children }) => {
                     <Container className='d-flex justify-content-center'>
                         <div className='row'>
                             <div className='col-lg-12'>
-                                <StaticImage className='main-logo' src="../images/main-logo.svg" alt="logo"  ></StaticImage>
+                                <StaticImage className='main-logo' src="../images/main-logo.svg" alt="logo" ></StaticImage>
                             </div>
                         </div>
                     </Container>
@@ -34,7 +34,7 @@ const Layout = ({ pageTitle, children }) => {
             <main className='main'>
                 {children}
             </main>
-            <Container>
+            <Container className={cart.length && 'd-none'}>
                 <footer className='text-center'>
                     <div className="disclaimer ">
                         <p>These products are not intended to diagnose, prevent, treat, or cure any disease. This information does not constitute medical advice and should not be relied upon as such. Consult with your doctor before modifying your regular medical regime.</p>

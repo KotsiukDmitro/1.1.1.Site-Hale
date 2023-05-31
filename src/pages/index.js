@@ -14,6 +14,7 @@ import SectionCard3 from "../components/Section-Card3"
 import FaqAccordion from "../components/FaqAccordion"
 import SpecialOfferModal from "../components/SpecialOfferModal"
 import PopUpFooter from "../components/PopUpFooter"
+import FormOrder from "../components/FormOrder"
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Col, Container, Row, Button, Collapse, Modal } from "react-bootstrap"
@@ -26,6 +27,33 @@ import "../styles/main.scss"
 
 import { useState } from 'react';
 
+export const listProducts = [
+  {
+    id: 1,
+    image: '../images/cards/card-1.png',
+    title: "Buy 2, Get 1 FREE",
+    price: 75.99
+  },
+  {
+    id: 2,
+    image: '../images/cards/card-2.png',
+    title: "Buy 1, Get 1 for 50% OFF",
+    price: 56.99
+  },
+  {
+    id: 3,
+    image: '../images/cards/card-3.png',
+    title: "Hale Breathing",
+    price: 29.99
+  },
+  {
+    id: 4,
+    image: '../images/hale-modal.png',
+    title: "Hale Breathing",
+    price: 26.99
+  }
+]
+
 const IndexPage = () => {
 
   const [open, setOpen] = useState(false)
@@ -35,15 +63,24 @@ const IndexPage = () => {
   const [show, setShow] = useState(false)
 
   const [showSpecialOfferModal, setShowSpecialOfferModal] = useState(false)
-
   function selectCard(cardNumber) {
     setShowSpecialOfferModal(true)
     setCheck(cardNumber)
   }
 
 
+  const [cart, setCart] = useState([])
+  function addToCart(bonus) {
+    let prodIdsToCart = [check]
+    if (bonus) {
+      prodIdsToCart.push(4)
+    }
+    setCart(prodIdsToCart.map(prodId => listProducts.find(p => p.id === prodId)))
+    setShowSpecialOfferModal(false)
+  }
+
   return (
-    <Layout pageTitle="Home Page">
+    <Layout pageTitle="Home Page" cart={cart}>
       <Container fluid="xl" className="container-padding bg-white">
 
         {/* Breathe Better Through Your Nose Instantly */}
@@ -163,7 +200,9 @@ const IndexPage = () => {
           <h2 className="offer-title text-center fw-bold">Experience the Power of Clear Breathing with Hale!</h2>
           <p className="offer-heading text-center">Order now and save</p>
           <div className="offer-bundles">
-            <SpecialOfferModal show={showSpecialOfferModal} onHide={() => setShowSpecialOfferModal(false)} />
+            <SpecialOfferModal
+              addToCart={addToCart}
+              show={showSpecialOfferModal} onHide={() => setShowSpecialOfferModal(false)} />
             <Row>
               <Col xs={12} md={4} className="card-indent" onClick={() => selectCard(1)}>
                 <SectionCard1 checked={check === 1} />
@@ -180,7 +219,8 @@ const IndexPage = () => {
             </div>
           </div>
         </section>
-        <section className="footer-badges">
+
+        <section className={cart.length ? "d-none" : "footer-badges"}>
           <div className="icons-group d-flex justify-content-center align-items-center">
             <div className="img-footer "><StaticImage src='../images/footer/guarantee-badges-sprite.webp' alt="logo" className="img-30-day"></StaticImage></div>
             <div className="img-footer"><StaticImage src='../images/footer/payment-badge-american-express.svg' alt="logo" className="img-footer-size1"></StaticImage></div>
@@ -193,7 +233,7 @@ const IndexPage = () => {
           <div className="mobile-only text-center"><h4 className="text-center fw-bold">30 Day Money Back Guarantee!</h4></div>
         </section>
 
-        <section className="section-faq text-center">
+        <section className={cart.length ? "d-none" : "section-faq text-center"}>
           <div className="display-faq" >
             <h3 ><strong>Have a Question</strong><span className="title-faq text-white fw-bold text-decoration-underline" onClick={() => setOpen(!open)}>See Our FAQs</span></h3>
           </div>
@@ -213,6 +253,9 @@ const IndexPage = () => {
             </Modal.Body>
           </Modal>
         </section>
+        <FormOrder
+          cart={cart}
+        />
       </Container>
       <PopUpFooter />
 
